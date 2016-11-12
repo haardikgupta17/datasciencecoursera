@@ -1,5 +1,6 @@
 # How to share data with a statistician
 This is a guide for anyone who needs to share data with a statistician or data scientist. The target audiences I have in mind are:<br/>
+
 * Collaborators who need statisticians or data scientists to analyze data for them<br/>
 * Students or postdocs in various disciplines looking for consulting advice<br/>
 * Junior statistics students whose job it is to collate/clean/wrangle data sets<br/>
@@ -11,6 +12,7 @@ My strong feeling is that statisticians should be able to handle the data in wha
 
 # What you should deliver to the statistician
 To facilitate the most efficient and timely analysis this is the information you should pass to a statistician:<br/>
+
 1. The raw data<br/>
 2. A [tidy data set](http://vita.had.co.nz/papers/tidy-data.pdf)<br/>
 3. A code book describing each variable and its values in the tidy data set.<br/>
@@ -20,12 +22,14 @@ Let's look at each part of the data package you will transfer.
 
 ### The raw data
 It is critical that you include the rawest form of the data that you have access to. This ensures that data provenance can be maintained throughout the workflow. Here are some examples of the raw form of data:
+
 * The strange [binary file](https://en.wikipedia.org/wiki/Binary_file) your measurement machine spits out<br/>
 * The unformatted Excel file with 10 worksheets the company you contracted with sent you<br/>
 * The complicated [JSON](https://en.wikipedia.org/wiki/JSON) data you got from scraping the [Twitter API](https://twitter.com/twitterapi)<br/>
 * The hand-entered numbers you collected looking through a microscope<br/>
 
-You know the raw data are in the right format if you:
+You know the raw data are in the right format if you:<br/>
+
 1. Ran no software on the data<br/>
 2. Did not modify any of the data values<br/>
 3. You did not remove any data from the data set<br/>
@@ -36,6 +40,7 @@ If you made any modifications of the raw data it is not the raw form of the data
 
 ### The tidy data set
 The general principles of tidy data are laid out by [Hadley Wickham](http://hadley.nz) in [this paper](http://vita.had.co.nz/papers/tidy-data.pdf) and [this video](https://vimeo.com/33727555). While both the paper and the video describe tidy data using [R](https://www.r-project.org), the principles are more generally applicable:<br/>
+
 1. Each variable you measure should be in one column<br/>
 2. Each different observation of that variable should be in a different row<br/>
 3. There should be one table for each "kind" of variable<br/>
@@ -51,20 +56,24 @@ If you are sharing your data with the collaborator in Excel, the tidy data shoul
 
 ### The code book
 For almost any data set, the measurements you calculate will need to be described in more detail than you can or should sneak into the spreadsheet. The code book contains this information. At minimum it should contain:<br/>
+
 1. Information about the variables (including units!) in the data set not contained in the tidy data<br/>
 2. Information about the summary choices you made<br/>
 3. Information about the experimental study design you used<br/>
+
 In our genomics example, the analyst would want to know what the unit of measurement for each clinical/demographic variable is (age in years, treatment by name/dose, level of diagnosis and how heterogeneous). They would also want to know how you picked the exons you used for summarizing the genomic data (UCSC/Ensembl, etc.). They would also want to know any other information about how you did the data collection/study design. For example, are these the first 20 patients that walked into the clinic? Are they 20 highly selected patients by some characteristic like age? Are they randomized to treatments?<br/>
 
 
 A common format for this document is a Word file. There should be a section called "Study design" that has a thorough description of how you collected the data. There is a section called "Code book" that describes each variable and its units.<br/>
 ### How to code variables
 When you put variables into a spreadsheet there are several main categories you will run into depending on their [data type](https://en.wikipedia.org/wiki/Statistical_data_type):<br/>
+
 1. Continuous<br/>
 2. Ordinal<br/>
 3. Categorical<br/>
 4. Missing<br/>
 5. Censored<br/>
+
 Continuous variables are anything measured on a quantitative scale that could be any fractional number. An example would be something like weight measured in kg. [Ordinal data](https://en.wikipedia.org/wiki/Ordinal_data) are data that have a fixed, small (< 100) number of levels but are ordered. This could be for example survey responses where the choices are: poor, fair, good. [Categorical data](https://en.wikipedia.org/wiki/Categorical_variable) are data where there are multiple categories, but they aren't ordered. One example would be sex: male or female. This coding is attractive because it is self-documenting. [Missing data](https://en.wikipedia.org/wiki/Missing_data) are data that are unobserved and you don't know the mechanism. You should code missing values as NA. [Censored data](https://en.wikipedia.org/wiki/Censoring_(statistics) are data where you know the missingness mechanism on some level. Common examples are a measurement being below a detection limit or a patient being lost to follow-up. They should also be coded as NA when you don't have the data. But you should also add a new column to your tidy data called, "VariableNameCensored" which should have values of TRUE if censored and FALSE if not. In the code book you should explain why those values are missing. It is absolutely critical to report to the analyst if there is a reason you know about that some of the data are missing. You should also not [impute](https://en.wikipedia.org/wiki/Imputation_(statistics))/make up/ throw away missing observations.<br/>
 
 
@@ -80,18 +89,22 @@ The ideal thing for you to do when performing summarization is to create a compu
 
 
 In many cases, the person who collected the data has incentive to make it tidy for a statistician to speed the process of collaboration. They may not know how to code in a scripting language. In that case, what you should provide the statistician is something called [pseudocode](https://en.wikipedia.org/wiki/Pseudocode). It should look something like:<br/>
+
 1. Step 1 - take the raw file, run version 3.1.2 of summarize software with parameters a=1, b=2, c=3<br/>
 2. Step 2 - run the software separately for each sample<br/>
 3. Step 3 - take column three of outputfile.out for each sample and that is the corresponding row in the output data set<br/>
+
 You should also include information about which system (Mac/Windows/Linux) you used the software on and whether you tried it more than once to confirm it gave the same results. Ideally, you will run this by a fellow student/labmate to confirm that they can obtain the same output file you did.<br/>
 # What you should expect from the analyst
 When you turn over a properly tidied data set it dramatically decreases the workload on the statistician. So hopefully they will get back to you much sooner. But most careful statisticians will check your recipe, ask questions about steps you performed, and try to confirm that they can obtain the same tidy data that you did with, at minimum, spot checks.<br/>
 
 
 You should then expect from the statistician:<br/>
+
 1. An analysis script that performs each of the analyses (not just instructions)<br/>
 2. The exact computer code they used to run the analysis<br/>
 3. All output files/figures they generated.<br/>
+
 This is the information you will use in the supplement to establish reproducibility and precision of your results. Each of the steps in the analysis should be clearly explained and you should ask questions when you don't understand what the analyst did. It is the responsibility of both the statistician and the scientist to understand the statistical analysis. You may not be able to perform the exact analyses without the statistician's code, but you should be able to explain why the statistician performed each step to a labmate/your principal investigator.<br/>
 ## Contributors
 * [Jeff Leek](http://jtleek.com) - Wrote the initial version.<br/>

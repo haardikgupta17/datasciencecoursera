@@ -1,4 +1,4 @@
-## How to share data with a statistician
+# How to share data with a statistician
 This is a guide for anyone who needs to share data with a statistician or data scientist. The target audiences I have in mind are:<br/>
 * Collaborators who need statisticians or data scientists to analyze data for them<br/>
 * Students or postdocs in various disciplines looking for consulting advice<br/>
